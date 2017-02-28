@@ -31,6 +31,9 @@
         "storageAccountName": {
             "value": "architechtrainingvhds"
         }, 
+        "storageContainerName": {
+            "value": "vhds"
+        },
         "jumpboxDnsPrefix": {
             "value": "jumpbox-architech-training"
         },

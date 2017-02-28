@@ -84,6 +84,12 @@
                 "description": "The name of the storage account for all the OS and Data disks."
             }
         },
+        "storageContainerName": {
+           "type": "string",
+           "metadata": {
+                "description": "The name of the container in the storage account."
+            }
+        },
         "appVmSize": {
             "type": "string",
             "allowedValues": [
@@ -200,7 +206,7 @@
             "version": "latest",
             "sku": "16.04-LTS"
         },
-        "storageUriBase": "[concat('https', '://', parameters('storageAccountName'), '.blob.core.windows.net/vhds/')]"
+        "storageUriBase": "[concat('https', '://', parameters('storageAccountName'), '.blob.core.windows.net/', parameters('storageContainerName'),'/')]"
     },
     "resources": [
         {
