@@ -39,28 +39,24 @@
         },
         "vnetAddressPrefix": {
             "type": "string",
-            "defaultValue": "192.168.0.0/16",
             "metadata": {
                 "description": "The IP Address pool for the virtual network in CIDR format."
             }
         },
         "appSubnetAddressPrefix": {
             "type": "string",
-            "defaultValue": "192.168.1.0/24",
             "metadata": {
                 "description": "The IP address pool for the application subnet in CIDR format"
             }
         },
         "dbSubnetAddressPrefix": {
             "type": "string",
-            "defaultValue": "192.168.2.0/24",
             "metadata": {
                 "description": "The IP address pool for the database subnet in CIDR format."
             }
         },
         "jumpboxSubnetAddressPrefix": {
             "type": "string",
-            "defaultValue": "192.168.3.0/24",
             "metadata": {
                 "description": "The IP address pool for the jumpbox subnet in CIDR format."
             }
@@ -79,7 +75,6 @@
         },
         "storageAccountName": {
             "type": "string",
-            "defaultValue": "architechvhdstraining",
             "metadata": {
                 "description": "The name of the storage account for all the OS and Data disks."
             }
