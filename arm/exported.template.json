@@ -1,0 +1,834 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachines_app_vm1_adminPassword": {
+            "defaultValue": null,
+            "type": "SecureString"
+        },
+        "virtualMachines_app_vm2_adminPassword": {
+            "defaultValue": null,
+            "type": "SecureString"
+        },
+        "virtualMachines_db_vm1_adminPassword": {
+            "defaultValue": null,
+            "type": "SecureString"
+        },
+        "virtualMachines_jumpbox_vm_adminPassword": {
+            "defaultValue": null,
+            "type": "SecureString"
+        },
+        "availabilitySets_app_availability_set_name": {
+            "defaultValue": "app-availability-set",
+            "type": "String"
+        },
+        "availabilitySets_db_availability_set_name": {
+            "defaultValue": "db-availability-set",
+            "type": "String"
+        },
+        "virtualMachines_app_vm1_name": {
+            "defaultValue": "app-vm1",
+            "type": "String"
+        },
+        "virtualMachines_app_vm2_name": {
+            "defaultValue": "app-vm2",
+            "type": "String"
+        },
+        "virtualMachines_db_vm1_name": {
+            "defaultValue": "db-vm1",
+            "type": "String"
+        },
+        "virtualMachines_jumpbox_vm_name": {
+            "defaultValue": "jumpbox-vm",
+            "type": "String"
+        },
+        "loadBalancers_architech_demo_lb_name": {
+            "defaultValue": "architech-demo-lb",
+            "type": "String"
+        },
+        "networkInterfaces_app_vm1394_name": {
+            "defaultValue": "app-vm1394",
+            "type": "String"
+        },
+        "networkInterfaces_app_vm2105_name": {
+            "defaultValue": "app-vm2105",
+            "type": "String"
+        },
+        "networkInterfaces_db_vm1627_name": {
+            "defaultValue": "db-vm1627",
+            "type": "String"
+        },
+        "networkInterfaces_jumpbox_vm953_name": {
+            "defaultValue": "jumpbox-vm953",
+            "type": "String"
+        },
+        "networkSecurityGroups_backEndNsg_name": {
+            "defaultValue": "backEndNsg",
+            "type": "String"
+        },
+        "networkSecurityGroups_frontEndNsg_name": {
+            "defaultValue": "frontEndNsg",
+            "type": "String"
+        },
+        "networkSecurityGroups_jumpboxNsg_name": {
+            "defaultValue": "jumpboxNsg",
+            "type": "String"
+        },
+        "publicIPAddresses_architech_http_ip_name": {
+            "defaultValue": "architech-http-ip",
+            "type": "String"
+        },
+        "publicIPAddresses_architech_ssh_ip_name": {
+            "defaultValue": "architech-ssh-ip",
+            "type": "String"
+        },
+        "virtualNetworks_architech_iaas_demo_vnet_name": {
+            "defaultValue": "architech-iaas-demo-vnet",
+            "type": "String"
+        },
+        "storageAccounts_architechiaasdemostorage_name": {
+            "defaultValue": "architechiaasdemostorage",
+            "type": "String"
+        },
+        "storageAccounts_azuredemoiaasnetworkr304_name": {
+            "defaultValue": "azuredemoiaasnetworkr304",
+            "type": "String"
+        },
+        "loadBalancers_architech_demo_lb_id": {
+            "defaultValue": "/subscriptions/17ef54cf-017b-4bf5-bdb8-90d18438ef14/resourceGroups/azure-demo-iaas-network-rg/providers/Microsoft.Network/loadBalancers/architech-demo-lb/frontendIPConfigurations/LoadBalancerFrontEnd",
+            "type": "String"
+        },
+        "loadBalancers_architech_demo_lb_id_1": {
+            "defaultValue": "/subscriptions/17ef54cf-017b-4bf5-bdb8-90d18438ef14/resourceGroups/azure-demo-iaas-network-rg/providers/Microsoft.Network/loadBalancers/architech-demo-lb/backendAddressPools/app-backend-pool",
+            "type": "String"
+        },
+        "loadBalancers_architech_demo_lb_id_2": {
+            "defaultValue": "/subscriptions/17ef54cf-017b-4bf5-bdb8-90d18438ef14/resourceGroups/azure-demo-iaas-network-rg/providers/Microsoft.Network/loadBalancers/architech-demo-lb/probes/externalLbProbe",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "comments": "Generalized from resource: '/subscriptions/17ef54cf-017b-4bf5-bdb8-90d18438ef14/resourceGroups/azure-demo-iaas-network-rg/providers/Microsoft.Compute/availabilitySets/app-availability-set'.",
+            "type": "Microsoft.Compute/availabilitySets",
+            "name": "[parameters('availabilitySets_app_availability_set_name')]",
+            "apiVersion": "2015-06-15",
+            "location": "CanadaEast",
+            "properties": {
+                "platformUpdateDomainCount": 5,
+                "platformFaultDomainCount": 2
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/17ef54cf-017b-4bf5-bdb8-90d18438ef14/resourceGroups/azure-demo-iaas-network-rg/providers/Microsoft.Compute/availabilitySets/db-availability-set'.",
+            "type": "Microsoft.Compute/availabilitySets",
+            "name": "[parameters('availabilitySets_db_availability_set_name')]",
+            "apiVersion": "2015-06-15",
+            "location": "CanadaEast",
+            "properties": {
+                "platformUpdateDomainCount": 5,
+                "platformFaultDomainCount": 2
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/17ef54cf-017b-4bf5-bdb8-90d18438ef14/resourceGroups/azure-demo-iaas-network-rg/providers/Microsoft.Compute/virtualMachines/app-vm1'.",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[parameters('virtualMachines_app_vm1_name')]",
+            "apiVersion": "2015-06-15",
+            "location": "CanadaEast",
+            "properties": {
+                "availabilitySet": {
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySets_app_availability_set_name'))]"
+                },
+                "hardwareProfile": {
+                    "vmSize": "Standard_A1"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "Canonical",
+                        "offer": "UbuntuServer",
+                        "sku": "16.04-LTS",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "name": "[parameters('virtualMachines_app_vm1_name')]",
+                        "createOption": "FromImage",
+                        "vhd": {
+                            "uri": "[concat('https', '://', parameters('storageAccounts_azuredemoiaasnetworkr304_name'), '.blob.core.windows.net', concat('/vhds/', parameters('virtualMachines_app_vm1_name'),'20170227111732.vhd'))]"
+                        },
+                        "caching": "ReadWrite"
+                    },
+                    "dataDisks": [
+                        {
+                            "lun": 0,
+                            "name": "data-disk1",
+                            "createOption": "Empty",
+                            "vhd": {
+                                "uri": "[concat('https', '://', parameters('storageAccounts_architechiaasdemostorage_name'), '.blob.core.windows.net', '/vhds/data-disk1.vhd')]"
+                            },
+                            "caching": "None",
+                            "diskSizeGB": 1023
+                        }
+                    ]
+                },
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachines_app_vm1_name')]",
+                    "adminUsername": "architech",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": false
+                    },
+                    "secrets": [],
+                    "adminPassword": "[parameters('virtualMachines_app_vm1_adminPassword')]"
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_app_vm1394_name'))]"
+                        }
+                    ]
+                }
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySets_app_availability_set_name'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_azuredemoiaasnetworkr304_name'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_architechiaasdemostorage_name'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_app_vm1394_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/17ef54cf-017b-4bf5-bdb8-90d18438ef14/resourceGroups/azure-demo-iaas-network-rg/providers/Microsoft.Compute/virtualMachines/app-vm2'.",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[parameters('virtualMachines_app_vm2_name')]",
+            "apiVersion": "2015-06-15",
+            "location": "CanadaEast",
+            "properties": {
+                "availabilitySet": {
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySets_app_availability_set_name'))]"
+                },
+                "hardwareProfile": {
+                    "vmSize": "Standard_A1"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "Canonical",
+                        "offer": "UbuntuServer",
+                        "sku": "16.04-LTS",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "name": "[parameters('virtualMachines_app_vm2_name')]",
+                        "createOption": "FromImage",
+                        "vhd": {
+                            "uri": "[concat('https', '://', parameters('storageAccounts_architechiaasdemostorage_name'), '.blob.core.windows.net', concat('/vhds/', parameters('virtualMachines_app_vm2_name'),'20170227112149.vhd'))]"
+                        },
+                        "caching": "ReadWrite"
+                    },
+                    "dataDisks": [
+                        {
+                            "lun": 0,
+                            "name": "data-disk1",
+                            "createOption": "Empty",
+                            "vhd": {
+                                "uri": "[concat('https', '://', parameters('storageAccounts_architechiaasdemostorage_name'), '.blob.core.windows.net', concat('/vhds/', parameters('virtualMachines_app_vm2_name'),'-datadisk1.vhd'))]"
+                            },
+                            "caching": "ReadWrite",
+                            "diskSizeGB": 1023
+                        }
+                    ]
+                },
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachines_app_vm2_name')]",
+                    "adminUsername": "architech",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": false
+                    },
+                    "secrets": [],
+                    "adminPassword": "[parameters('virtualMachines_app_vm2_adminPassword')]"
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_app_vm2105_name'))]"
+                        }
+                    ]
+                }
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySets_app_availability_set_name'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_architechiaasdemostorage_name'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_app_vm2105_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/17ef54cf-017b-4bf5-bdb8-90d18438ef14/resourceGroups/azure-demo-iaas-network-rg/providers/Microsoft.Compute/virtualMachines/db-vm1'.",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[parameters('virtualMachines_db_vm1_name')]",
+            "apiVersion": "2015-06-15",
+            "location": "CanadaEast",
+            "properties": {
+                "availabilitySet": {
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySets_db_availability_set_name'))]"
+                },
+                "hardwareProfile": {
+                    "vmSize": "Standard_D1_v2"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "Canonical",
+                        "offer": "UbuntuServer",
+                        "sku": "16.04-LTS",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "name": "[parameters('virtualMachines_db_vm1_name')]",
+                        "createOption": "FromImage",
+                        "vhd": {
+                            "uri": "[concat('https', '://', parameters('storageAccounts_architechiaasdemostorage_name'), '.blob.core.windows.net', concat('/vhds/', parameters('virtualMachines_db_vm1_name'),'20170227112504.vhd'))]"
+                        },
+                        "caching": "ReadWrite"
+                    },
+                    "dataDisks": [
+                        {
+                            "lun": 0,
+                            "name": "data-disk1",
+                            "createOption": "Empty",
+                            "vhd": {
+                                "uri": "[concat('https', '://', parameters('storageAccounts_architechiaasdemostorage_name'), '.blob.core.windows.net', concat('/vhds/', parameters('virtualMachines_db_vm1_name'),'-datadisk.vhd'))]"
+                            },
+                            "caching": "None",
+                            "diskSizeGB": 1023
+                        }
+                    ]
+                },
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachines_db_vm1_name')]",
+                    "adminUsername": "architech",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": false
+                    },
+                    "secrets": [],
+                    "adminPassword": "[parameters('virtualMachines_db_vm1_adminPassword')]"
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_db_vm1627_name'))]"
+                        }
+                    ]
+                }
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySets_db_availability_set_name'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_architechiaasdemostorage_name'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_db_vm1627_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/17ef54cf-017b-4bf5-bdb8-90d18438ef14/resourceGroups/azure-demo-iaas-network-rg/providers/Microsoft.Compute/virtualMachines/jumpbox-vm'.",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[parameters('virtualMachines_jumpbox_vm_name')]",
+            "apiVersion": "2015-06-15",
+            "location": "CanadaEast",
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_A1"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "Canonical",
+                        "offer": "UbuntuServer",
+                        "sku": "16.04-LTS",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "name": "[parameters('virtualMachines_jumpbox_vm_name')]",
+                        "createOption": "FromImage",
+                        "vhd": {
+                            "uri": "[concat('https', '://', parameters('storageAccounts_architechiaasdemostorage_name'), '.blob.core.windows.net', concat('/vhds/', parameters('virtualMachines_jumpbox_vm_name'),'20170227110826.vhd'))]"
+                        },
+                        "caching": "ReadWrite"
+                    },
+                    "dataDisks": [
+                        {
+                            "lun": 0,
+                            "name": "data-disk1",
+                            "createOption": "Empty",
+                            "vhd": {
+                                "uri": "[concat('https', '://', parameters('storageAccounts_architechiaasdemostorage_name'), '.blob.core.windows.net', '/vhds/jumpbox-data-disk1.vhd')]"
+                            },
+                            "caching": "None",
+                            "diskSizeGB": 1023
+                        }
+                    ]
+                },
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachines_jumpbox_vm_name')]",
+                    "adminUsername": "architech",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": true,
+                        "ssh": {
+                            "publicKeys": [
+                                {
+                                    "path": "/home/architech/.ssh/authorized_keys",
+                                    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDO8L9wBuPvbsB2FWzl51/mf/KCPpDkAuI2n9zytG4LDbbRINEE/JAwORsvEVAV/+8V67sE3S6XGqdSqRenVMvf/6SUOTgU8cSh5q2YNY8uiiKi7L4wHjyCvXBzdGWbb3qm/8Mkew6r7AHb5D+9g2CHSCCpgxICbi21jfP6UiFPOZVIfqdU4zLTFiEH40D33XW/5bChLX2R529xYm7HNuaMnD0PHVaKiNIH4Qnc5tqOUyT6EHNLB/E7k5Vr0Lic2AXrTZtNE63OvBfoTg26ALaVXOVoN5AQQM1xWVS9mNw4xOsYqHK3VT9XDEdV6OrT69dfG6MkBk0SVUD2dagUwOF9"
+                                }
+                            ]
+                        }
+                    },
+                    "secrets": [],
+                    "adminPassword": "[parameters('virtualMachines_jumpbox_vm_adminPassword')]"
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_jumpbox_vm953_name'))]"
+                        }
+                    ]
+                }
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_architechiaasdemostorage_name'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_jumpbox_vm953_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/17ef54cf-017b-4bf5-bdb8-90d18438ef14/resourceGroups/azure-demo-iaas-network-rg/providers/Microsoft.Network/loadBalancers/architech-demo-lb'.",
+            "type": "Microsoft.Network/loadBalancers",
+            "name": "[parameters('loadBalancers_architech_demo_lb_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "canadaeast",
+            "properties": {
+                "frontendIPConfigurations": [
+                    {
+                        "name": "LoadBalancerFrontEnd",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_architech_http_ip_name'))]"
+                            }
+                        }
+                    }
+                ],
+                "backendAddressPools": [
+                    {
+                        "name": "app-backend-pool"
+                    }
+                ],
+                "loadBalancingRules": [
+                    {
+                        "name": "HTTPLbRule",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "[parameters('loadBalancers_architech_demo_lb_id')]"
+                            },
+                            "frontendPort": 80,
+                            "backendPort": 80,
+                            "enableFloatingIP": false,
+                            "idleTimeoutInMinutes": 4,
+                            "protocol": "Tcp",
+                            "loadDistribution": "Default",
+                            "backendAddressPool": {
+                                "id": "[parameters('loadBalancers_architech_demo_lb_id_1')]"
+                            },
+                            "probe": {
+                                "id": "[parameters('loadBalancers_architech_demo_lb_id_2')]"
+                            }
+                        }
+                    }
+                ],
+                "probes": [
+                    {
+                        "name": "externalLbProbe",
+                        "properties": {
+                            "protocol": "Tcp",
+                            "port": 80,
+                            "intervalInSeconds": 15,
+                            "numberOfProbes": 5
+                        }
+                    }
+                ],
+                "inboundNatRules": [],
+                "outboundNatRules": [],
+                "inboundNatPools": []
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_architech_http_ip_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/17ef54cf-017b-4bf5-bdb8-90d18438ef14/resourceGroups/azure-demo-iaas-network-rg/providers/Microsoft.Network/networkInterfaces/app-vm1394'.",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[parameters('networkInterfaces_app_vm1394_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "canadaeast",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAddress": "192.168.1.4",
+                            "privateIPAllocationMethod": "Dynamic",
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_architech_iaas_demo_vnet_name')), '/subnets/web')]"
+                            },
+                            "loadBalancerBackendAddressPools": [
+                                {
+                                    "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancers_architech_demo_lb_name')), '/backendAddressPools/app-backend-pool')]"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableIPForwarding": false,
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_frontEndNsg_name'))]"
+                }
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_architech_iaas_demo_vnet_name'))]",
+                "[resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancers_architech_demo_lb_name'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_frontEndNsg_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/17ef54cf-017b-4bf5-bdb8-90d18438ef14/resourceGroups/azure-demo-iaas-network-rg/providers/Microsoft.Network/networkInterfaces/app-vm2105'.",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[parameters('networkInterfaces_app_vm2105_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "canadaeast",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAddress": "192.168.1.5",
+                            "privateIPAllocationMethod": "Dynamic",
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_architech_iaas_demo_vnet_name')), '/subnets/web')]"
+                            },
+                            "loadBalancerBackendAddressPools": [
+                                {
+                                    "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancers_architech_demo_lb_name')), '/backendAddressPools/app-backend-pool')]"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableIPForwarding": false,
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_frontEndNsg_name'))]"
+                }
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_architech_iaas_demo_vnet_name'))]",
+                "[resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancers_architech_demo_lb_name'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_frontEndNsg_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/17ef54cf-017b-4bf5-bdb8-90d18438ef14/resourceGroups/azure-demo-iaas-network-rg/providers/Microsoft.Network/networkInterfaces/db-vm1627'.",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[parameters('networkInterfaces_db_vm1627_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "canadaeast",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAddress": "192.168.2.4",
+                            "privateIPAllocationMethod": "Dynamic",
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_architech_iaas_demo_vnet_name')), '/subnets/db')]"
+                            }
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableIPForwarding": false,
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_backEndNsg_name'))]"
+                }
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_architech_iaas_demo_vnet_name'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_backEndNsg_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/17ef54cf-017b-4bf5-bdb8-90d18438ef14/resourceGroups/azure-demo-iaas-network-rg/providers/Microsoft.Network/networkInterfaces/jumpbox-vm953'.",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[parameters('networkInterfaces_jumpbox_vm953_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "canadaeast",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAddress": "192.168.3.4",
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_architech_ssh_ip_name'))]"
+                            },
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_architech_iaas_demo_vnet_name')), '/subnets/jumpbox')]"
+                            }
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableIPForwarding": false,
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_jumpboxNsg_name'))]"
+                }
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_architech_ssh_ip_name'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_architech_iaas_demo_vnet_name'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_jumpboxNsg_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/17ef54cf-017b-4bf5-bdb8-90d18438ef14/resourceGroups/azure-demo-iaas-network-rg/providers/Microsoft.Network/networkSecurityGroups/backEndNsg'.",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[parameters('networkSecurityGroups_backEndNsg_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "canadaeast",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "allow-from-frontend-subnet",
+                        "properties": {
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "192.168.1.0/24",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 100,
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                        "name": "allow-ssh-from-jumpbox-subnet",
+                        "properties": {
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "22",
+                            "sourceAddressPrefix": "192.168.3.0/24",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 110,
+                            "direction": "Inbound"
+                        }
+                    }
+                ]
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/17ef54cf-017b-4bf5-bdb8-90d18438ef14/resourceGroups/azure-demo-iaas-network-rg/providers/Microsoft.Network/networkSecurityGroups/frontEndNsg'.",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[parameters('networkSecurityGroups_frontEndNsg_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "canadaeast",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "http-rule",
+                        "properties": {
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "80",
+                            "sourceAddressPrefix": "Internet",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 100,
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                        "name": "allow-ssh-from-jumpbox-subnet",
+                        "properties": {
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "22",
+                            "sourceAddressPrefix": "192.168.3.0/24",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 200,
+                            "direction": "Inbound"
+                        }
+                    }
+                ]
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/17ef54cf-017b-4bf5-bdb8-90d18438ef14/resourceGroups/azure-demo-iaas-network-rg/providers/Microsoft.Network/networkSecurityGroups/jumpboxNsg'.",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[parameters('networkSecurityGroups_jumpboxNsg_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "canadaeast",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "allow_ssh_access_from_architech_IP_range",
+                        "properties": {
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "22",
+                            "sourceAddressPrefix": "Internet",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 100,
+                            "direction": "Inbound"
+                        }
+                    }
+                ]
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/17ef54cf-017b-4bf5-bdb8-90d18438ef14/resourceGroups/azure-demo-iaas-network-rg/providers/Microsoft.Network/publicIPAddresses/architech-http-ip'.",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[parameters('publicIPAddresses_architech_http_ip_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "canadaeast",
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic",
+                "idleTimeoutInMinutes": 4,
+                "dnsSettings": {
+                    "domainNameLabel": "architech-iaas-http"
+                }
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/17ef54cf-017b-4bf5-bdb8-90d18438ef14/resourceGroups/azure-demo-iaas-network-rg/providers/Microsoft.Network/publicIPAddresses/architech-ssh-ip'.",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[parameters('publicIPAddresses_architech_ssh_ip_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "canadaeast",
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic",
+                "idleTimeoutInMinutes": 4,
+                "dnsSettings": {
+                    "domainNameLabel": "architech-iaas-ssh"
+                }
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/17ef54cf-017b-4bf5-bdb8-90d18438ef14/resourceGroups/azure-demo-iaas-network-rg/providers/Microsoft.Network/virtualNetworks/architech-iaas-demo-vnet'.",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[parameters('virtualNetworks_architech_iaas_demo_vnet_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "canadaeast",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "192.168.0.0/16"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "web",
+                        "properties": {
+                            "addressPrefix": "192.168.1.0/24",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_frontEndNsg_name'))]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "db",
+                        "properties": {
+                            "addressPrefix": "192.168.2.0/24",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_backEndNsg_name'))]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "jumpbox",
+                        "properties": {
+                            "addressPrefix": "192.168.3.0/24",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_jumpboxNsg_name'))]"
+                            }
+                        }
+                    }
+                ]
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_frontEndNsg_name'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_backEndNsg_name'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_jumpboxNsg_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/17ef54cf-017b-4bf5-bdb8-90d18438ef14/resourceGroups/azure-demo-iaas-network-rg/providers/Microsoft.Storage/storageAccounts/architechiaasdemostorage'.",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "Storage",
+            "name": "[parameters('storageAccounts_architechiaasdemostorage_name')]",
+            "apiVersion": "2016-01-01",
+            "location": "canadaeast",
+            "tags": {},
+            "properties": {},
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/17ef54cf-017b-4bf5-bdb8-90d18438ef14/resourceGroups/azure-demo-iaas-network-rg/providers/Microsoft.Storage/storageAccounts/azuredemoiaasnetworkr304'.",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "Storage",
+            "name": "[parameters('storageAccounts_azuredemoiaasnetworkr304_name')]",
+            "apiVersion": "2016-01-01",
+            "location": "canadaeast",
+            "tags": {},
+            "properties": {},
+            "resources": [],
+            "dependsOn": []
+        }
+    ]
+}

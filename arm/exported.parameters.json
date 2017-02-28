@@ -1,0 +1,84 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachines_app_vm1_adminPassword": {
+            "value": null
+        },
+        "virtualMachines_app_vm2_adminPassword": {
+            "value": null
+        },
+        "virtualMachines_db_vm1_adminPassword": {
+            "value": null
+        },
+        "virtualMachines_jumpbox_vm_adminPassword": {
+            "value": null
+        },
+        "availabilitySets_app_availability_set_name": {
+            "value": null
+        },
+        "availabilitySets_db_availability_set_name": {
+            "value": null
+        },
+        "virtualMachines_app_vm1_name": {
+            "value": null
+        },
+        "virtualMachines_app_vm2_name": {
+            "value": null
+        },
+        "virtualMachines_db_vm1_name": {
+            "value": null
+        },
+        "virtualMachines_jumpbox_vm_name": {
+            "value": null
+        },
+        "loadBalancers_architech_demo_lb_name": {
+            "value": null
+        },
+        "networkInterfaces_app_vm1394_name": {
+            "value": null
+        },
+        "networkInterfaces_app_vm2105_name": {
+            "value": null
+        },
+        "networkInterfaces_db_vm1627_name": {
+            "value": null
+        },
+        "networkInterfaces_jumpbox_vm953_name": {
+            "value": null
+        },
+        "networkSecurityGroups_backEndNsg_name": {
+            "value": null
+        },
+        "networkSecurityGroups_frontEndNsg_name": {
+            "value": null
+        },
+        "networkSecurityGroups_jumpboxNsg_name": {
+            "value": null
+        },
+        "publicIPAddresses_architech_http_ip_name": {
+            "value": null
+        },
+        "publicIPAddresses_architech_ssh_ip_name": {
+            "value": null
+        },
+        "virtualNetworks_architech_iaas_demo_vnet_name": {
+            "value": null
+        },
+        "storageAccounts_architechiaasdemostorage_name": {
+            "value": null
+        },
+        "storageAccounts_azuredemoiaasnetworkr304_name": {
+            "value": null
+        },
+        "loadBalancers_architech_demo_lb_id": {
+            "value": null
+        },
+        "loadBalancers_architech_demo_lb_id_1": {
+            "value": null
+        },
+        "loadBalancers_architech_demo_lb_id_2": {
+            "value": null
+        }
+    }
+}
