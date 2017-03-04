@@ -32,7 +32,7 @@
         },
         "vnetName": {
             "type": "string",
-            "defaultValue": "architech-vnet",
+            "defaultValue": "architechVnet",
             "metadata": {
                 "description": "Name of the virtual network"
             }
@@ -173,11 +173,11 @@
         }
     },
     "variables": {
-        "appAvailabilitySetName": "app-availability-set",
-        "dbAvailabilitySetName": "db-availability-set",
-        "loadBalancerName": "architech-demo-lb",
+        "appAvailabilitySetName": "appAvailabilitySet",
+        "dbAvailabilitySetName": "dbAvailabilitySet",
+        "loadBalancerName": "architechTrainingLb",
         "loadBalancerRef": "[resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName'))]",
-        "backendAddressPoolName": "app-backend-pool",
+        "backendAddressPoolName": "appBackendPool",
         "appSubnetName": "app",
         "dbSubnetName": "db",
         "jumpboxSubnetName": "jumpbox",
@@ -185,14 +185,14 @@
         "dbNsgName": "[concat(variables('dbSubnetName'), '-nsg')]",
         "jumpboxNsgName": "[concat(variables('jumpboxSubnetName'), '-nsg')]",
         "vnetRef": "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]",
-        "httpPublicIpName": "architech-http-publicIp",
-        "jumpboxPublicIpName": "jumpbox-ssh-publicIp",
-        "jumpboxVmName": "jumpbox-vm",
-        "appVmName": "app-vm",
-        "dbVmName": "db-vm",
-        "jumpboxNicName": "jumpbox-nic",
-        "appVmNicName": "app-nic",
-        "dbVmNicName": "db-nic",
+        "httpPublicIpName": "httpPublicIp",
+        "jumpboxPublicIpName": "sshPublicIp",
+        "jumpboxVmName": "jumpboxVm",
+        "appVmName": "appVm",
+        "dbVmName": "dbVm",
+        "jumpboxNicName": "jumpboxNic",
+        "appVmNicName": "appNic",
+        "dbVmNicName": "dbNic",
         "updateDomainCount": 5,
         "faultDomainCount": 2,
         "os": {
