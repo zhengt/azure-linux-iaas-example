@@ -510,16 +510,12 @@
                 "dnsSettings": {
                     "dnsServers": []
                 },
-                "enableIPForwarding": false,
-                "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('appNsgName'))]"
-                }
+                "enableIPForwarding": false
             },
             "resources": [],
             "dependsOn": [
                 "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]",
-                "[resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName'))]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', variables('appNsgName'))]"
+                "[resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName'))]"
             ]
         },
         {
@@ -546,15 +542,11 @@
                 "dnsSettings": {
                     "dnsServers": []
                 },
-                "enableIPForwarding": false,
-                "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('dbNsgName'))]"
-                }
+                "enableIPForwarding": false
             },
             "resources": [],
             "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', variables('dbNsgName'))]"
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
             ]
         },
         {
@@ -580,16 +572,12 @@
                 "dnsSettings": {
                     "dnsServers": []
                 },
-                "enableIPForwarding": false,
-                "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('jumpboxNsgName'))]"
-                }
+                "enableIPForwarding": false
             },
             "resources": [],
             "dependsOn": [
                 "[resourceId('Microsoft.Network/publicIPAddresses', variables('jumpboxPublicIpName'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', variables('jumpboxNsgName'))]"
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
             ]
         },
         {
