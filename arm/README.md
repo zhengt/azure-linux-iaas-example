@@ -6,33 +6,34 @@ Also, although I leverage Azure Key Vault to store secrets such as the admin pas
 The [azureDeploy.parameters.json](./azureDeploy.parameters.json) template contains the parameters you need to provide. 
 The [azureDeploy.json](./azureDeploy.json) is the template the defines the ARM resources and dependencies. This is the core template that specifies your deployment architecture as executable documentation.
 
-In order to execute these templates, you need to have a pre-existing storage account, it must be a 'General Purpose' account.  Provide the name of the storage account in the parameters template.
+In order to execute these templates, you need to have a pre-existing storage account.  I have named the account `architechtrainingvhds` but you will have to choose a unique name and update the `storageAccountName` parameter value in the azureDeploy.parameters.json file. This is required as storage accounts are referenced by URIs and they need to be unique.   You then need to create a container for blob storage called `vhds` within your storage account.  Set the access to readonly for the container.
+
 You also need to have a pre-existing Azure Key Vault resources with a secret named 'adminPassword' that stores the admin user password.  Go to [here](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-manager-keyvault-parameter) for instructions.
 
 To deploy the template using Azure CLI execute the following commands.  Note, I assume the storage account resource group has already been created.
 
 ```
 #login to azure and follow the instructions
-azure login
+az login
 
 #Create a resource group, location would be "Canada East"
-azure group create -n <resource-group-name> -l <location>
+az group create -n <resource-group-name> -l <location>
 
-#Always validate the template prior to trying to deploy it to catch any errors that may exist. The '-vv' switch means 'verbose'
-azure group template validate -f azureDeploy.json -e azureDeploy.parameters.json -g <resource-group-name> -vv
+#Always validate the template prior to trying to deploy it to catch any errors that may exist.
+az group deployment validate --template-file arm/azureDeploy.json --parameters @arm/azureDeploy.parameters.json -g <resource-group-name>
 
 #if the template is valid...
-azure group deployment create -f azureDeploy.json -e azureDeploy.parameters.json -g <resource-group-name> -n <deploy-name>
+az group deployment create --template-file arm/azureDeploy.json --parameters @arm/azureDeploy.parameters.json -g <resource-group-name> -n <deploy-name>
 ```
 ## Getting help with azure CLI
 
 ```
 
 #to access help do this...
-azure help <command>
+az <command> -h
 
 #for example, for 'azure group template validate...'  you would do this...
-azure help group template validate
+az group deployment validate -h
 
 ```
 The following resources are deployed in this template.
