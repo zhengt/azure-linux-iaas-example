@@ -6,12 +6,7 @@
             "value": "architech"
         },
         "adminPassword": {
-            "reference": {
-                "keyVault": {
-                    "id": "/subscriptions/17ef54cf-017b-4bf5-bdb8-90d18438ef14/resourceGroups/architech-training-keyvault-rg/providers/Microsoft.KeyVault/vaults/architech-training-vault"
-                },
-                "secretName": "adminPassword"
-            }
+            "value": "architech"
         },
         "vnetName": {
             "value": "architech-training-vnet"
