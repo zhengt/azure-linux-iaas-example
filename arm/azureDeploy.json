@@ -227,6 +227,18 @@
             }
         },
         {
+          "type": "Microsoft.Storage/storageAccounts",
+          "name": "[parameters('storageAccountName')]",
+          "apiVersion": "2017-10-01",
+          "location": "[resourceGroup().location]",
+          "sku": {
+            "name": "Standard_LRS"
+          },
+          "kind": "Storage",
+          "properties": {
+          }
+        },
+        {
             "comments": "Application VMs",
             "type": "Microsoft.Compute/virtualMachines",
             "name": "[concat(variables('appVmName'), copyIndex(1))]",
@@ -290,6 +302,7 @@
             "resources": [],
             "dependsOn": [
                 "[resourceId('Microsoft.Compute/availabilitySets', variables('appAvailabilitySetName'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
                 "[resourceId('Microsoft.Network/networkInterfaces', concat(variables('appVmNicName'), copyIndex(1)))]"
             ]
         },
@@ -357,6 +370,7 @@
             "resources": [],
             "dependsOn": [
                 "[resourceId('Microsoft.Compute/availabilitySets', variables('dbAvailabilitySetName'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
                 "[resourceId('Microsoft.Network/networkInterfaces', concat(variables('dbVmNicName'), copyIndex(1)))]"
             ]
         },
@@ -415,6 +429,7 @@
             },
             "resources": [],
             "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
                 "[resourceId('Microsoft.Network/networkInterfaces', variables('jumpboxNicName'))]"
             ]
         },
